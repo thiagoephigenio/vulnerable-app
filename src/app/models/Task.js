@@ -22,11 +22,7 @@ class Task {
   }
   async getAll() {
     const query = "SELECT * FROM tasks WHERE id > " + "1";
-    await db.query(query).then((result) => {
-      const { rows: tasks } = result;
-      console.log(tasks);
-    });
-    console.log("Nenhuma tarefa cadastrada no sistema!");
+    return db.query(query)
   }
 }
 module.exports = new Task();

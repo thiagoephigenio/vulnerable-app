@@ -1,4 +1,5 @@
 const db = require("../../config/database");
+const jwt = require("jsonwebtoken");
 
 class User {
   async create() {
@@ -20,13 +21,19 @@ class User {
     });
     console.log("User removido com sucesso!");
   }
-  async getAll() {
+  getAll() {
     const query = "SELECT * FROM users WHERE id > " + "1";
-    await db.query(query).then((result) => {
-      const { rows: users } = result;
-      console.log(users);
-    });
-    console.log("Nenhuma User cadastrado no sistema!");
+    return db.query(query);
+  }
+
+  findOne(email, password) {
+    const query =
+      `SELECT * FROM users WHERE email = '` +
+      email +
+      `' AND password = '` +
+      password +
+      `'`;
+    return db.query(query);
   }
 }
 module.exports = new User();

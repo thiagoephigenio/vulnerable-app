@@ -11,8 +11,7 @@ class TaskController {
     res.status(200).send("Remove tasks works!!");
   }
   async getAll(req, res) {
-    await Task.getAll();
-    res.status(200).send("Get all tasks works!!");
+    await Task.getAll().then((tasks) => res.status(200).send(tasks.rows)) 
   }
 }
 
