@@ -28,14 +28,14 @@ class SessionController {
         }
 
         const token = jwt.sign({ user: user.id });
-       
+
         res.status(200).send({ user, token });
       })
       .catch(() => res.status(401));
   }
 
-  logout(req, res) {    
-    console.log(req.headers.authorization)
+  logout(req, res) {
+    console.log(req.headers.authorization);
     res.status(200).send("logout successful !");
   }
 }

@@ -1,16 +1,16 @@
 const db = require("../../config/database");
 
 class Task {
-  async create(user_id, title, description, iscomplete) {
-    await db.query(
+  create(user_id, title, description, isComplete) {
+     return db.query(
       `INSERT INTO tasks(
         user_id, 
         title, 
-        description, 
-        iscomplete) 
-        VALUES (${user_id}, '${title}', '${description}', ${iscomplete})`
+        iscomplete,
+        description) 
+        VALUES (${user_id}, '${title}', ${isComplete}, '${description}')`
     );
-    console.log("tarefa criada com sucesso!");
+    // console.log(`${user_id} ${title} ${description} ${isComplete}`);
   }
   async remove(id) {
     const query = "DELETE FROM tasks WHERE id =" + id;
