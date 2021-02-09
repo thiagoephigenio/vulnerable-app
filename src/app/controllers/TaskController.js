@@ -2,7 +2,6 @@ const Task = require("../models/Task");
 
 class TaskController {
   create(req, res) {
-    // console.log(req.body);
     Task.create(
       req.body.user_id,
       req.body.title,

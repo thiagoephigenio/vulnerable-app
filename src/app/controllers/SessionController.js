@@ -16,7 +16,7 @@ class SessionController {
   }
 
   async login(req, res) {
-    const [hasType, hash] = req.headers.authorization.split(" ");
+    const [, hash] = req.headers.authorization.split(" ");
     const [email, password] = Buffer.from(hash, "base64").toString().split(":");
 
     await User.findOne(email, password)
@@ -28,11 +28,12 @@ class SessionController {
         }
 
         const token = jwt.sign({ user: user.id });
-
+        res.cookie ('authcookie', token) 
+      
         res.status(200).send({ user, token });
       })
       .catch(() => res.status(401));
-  }
+  }8
 
   logout(req, res) {
     console.log(req.headers.authorization);
