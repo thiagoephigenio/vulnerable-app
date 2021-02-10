@@ -19,21 +19,19 @@ class SessionController {
     const [, hash] = req.headers.authorization.split(" ");
     const [email, password] = Buffer.from(hash, "base64").toString().split(":");
 
-    await User.findOne(email, password)
+    await User.findOne({ where: { email: email, password: password } })
       .then((userResult) => {
-        const [user] = userResult.rows;
-
-        if (!user) {
+        if (!userResult) {
           res.status(401).send();
         }
+        console.log("logado");
+        const token = jwt.sign({ user: userResult.id });
+        res.cookie("authcookie", token);
 
-        const token = jwt.sign({ user: user.id });
-        res.cookie ('authcookie', token) 
-      
-        res.status(200).send({ user, token });
+        res.status(200).send(userResult);
       })
       .catch(() => res.status(401));
-  }8
+  }
 
   logout(req, res) {
     console.log(req.headers.authorization);

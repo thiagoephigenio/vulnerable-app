@@ -21,15 +21,39 @@ routes.get("/tasks", async (req, res) => {
   await TaskController.getAll(req, res);
 });
 
-routes.get("/users", async (req, res) => {
-  await UserController.getAll(req, res);
+routes.get("/task", (req, res) => {
+  TaskController.findOne(req, res);
 });
 
-routes.post("/create-task", async (req, res) => {
-  await TaskController.create(req, res); 
+routes.post("/create-task", (req, res) => {
+  TaskController.create(req, res);
+});
+
+routes.post("/remove-task", (req, res) => {
+  TaskController.remove(req, res);
+});
+routes.get("/remove-all-tasks", (req, res) => {
+  TaskController.removeAll(req, res);
+});
+
+routes.get("/users", (req, res) => {
+  UserController.getAll(req, res);
+});
+
+routes.get("/user", (req, res) => {
+  UserController.findOne(req, res);
+});
+
+routes.post("/create-user", (req, res) => {
+  UserController.create(req, res);
+});
+
+routes.post("/remove-user", (req, res) => {
+  UserController.remove(req, res);
 });
 
 routes.get("/logout", function (req, res) {
   SessionController.logout(req, res);
 });
+
 module.exports = routes;

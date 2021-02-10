@@ -1,22 +1,31 @@
 const User = require("../models/User");
 
 class UserController {
-  async create(req, res) {
-    console.log(req.body);
-    await User.create(
-      req.body.user_id,
-      req.body.title,
-      req.body.description,
-      req.body.iscomplete
-    );
-    res.status(200).send("Create Users works!!");
+  create(req, res) {
+    const { name, email, password } = req.body;
+    User.create({ name: name, email: email, password: password })
+      .then((result) => res.status(200).send(result))
+      .catch((error) => res.status(401).send(error));
   }
-  async remove(req, res) {
-    await User.remove();
-    res.status(200).send("Remove Users works!!");
+
+  remove(req, res) {
+    const { id } = req.body;
+    User.destroy({ where: { id: id } })
+      .then((result) => res.status(200).json(result))
+      .catch((error) => res.status(401).json(error));
   }
-  async getAll(req, res) {
-   await User.getAll().then((users) => res.status(200).send(users.rows))      
+
+  getAll(req, res) {
+    User.findAll()
+      .then((users) => res.status(200).json(users))
+      .catch((error) => res.status(401).json(error));
+  }
+
+  findOne(req, res) {
+    const { email, password } = req.body;
+    User.findOne({ where: { email: email, password: password } })
+      .then((user) => res.status(200).json(user))
+      .catch((error) => res.status(401).json(error));
   }
 }
 
